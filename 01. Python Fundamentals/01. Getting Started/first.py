@@ -1,0 +1,5 @@
+print("Hello World",end="&")
+print("This is Sparta",end="\n")
+print("welcome to the world\n",end="MMasdf")
+print("new line")
+print("fist world","second word","third word",sep="--")
