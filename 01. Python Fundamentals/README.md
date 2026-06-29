@@ -10,7 +10,7 @@ Relearn core Python in order. Each folder is a topic block; run the `.py` files 
 | 04 | `04. Collections/` | `01`–`18`: str, range, list, tuple, set, dict, nesting, when to use which |
 | 05 | `05. Functions/` | `01`–`15`: def, return, defaults, scope, *args/**kwargs, lambda, recursion |
 | 06 | `06. Object Oriented Programming/` | `01`–`16`: classes, inheritance, polymorphism, ABC, dataclasses |
-| 07 | `07. Advanced Topics/` | Subfolders: comprehensions, exceptions, modules, files, generators, decorators, concurrency, context managers, typing |
+| 07 | `07. Advanced Topics/` | Subfolders: comprehensions, exceptions, modules, files, generators, decorators, concurrency, **testing**, context managers, typing |
 | 08 | `08. Practice Problems/` | Patterns, primes, factorial, and other drills |
 
 **Tip:** After each folder, rewrite one exercise from memory without looking at the file.
