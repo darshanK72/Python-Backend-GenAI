@@ -9,7 +9,7 @@ A structured workspace to relearn Python, build backend skills with **Flask**, *
 | 1 | [`01. Python Fundamentals/`](01.%20Python%20Fundamentals/) | Core Python — syntax, collections, functions, practice |
 | 2 | [`02. Python Libraries/`](02.%20Python%20Libraries/) | NumPy, Pandas, Matplotlib, Requests, Tkinter, sklearn, and more |
 | 3 | [`03. Python Backend/`](03.%20Python%20Backend/) | MySQL, networking, Flask, FastAPI, Django |
-| 4 | [`04. Gen AI/`](04.%20Gen%20AI/) | Notebooks and Gener AI experiments |
+| 4 | [`04. Gen AI/`](04.%20Gen%20AI/) | LLMs, embeddings, RAG, LangChain, capstone API |
 
 Work through folders **in order**. Each numbered subfolder in `01. Python Fundamentals` builds on the previous one.
 

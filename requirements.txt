@@ -57,10 +57,9 @@ apscheduler>=3.10
 prometheus-client>=0.20
 mangum>=0.17
 
-# --- Gen AI (uncomment when you start 04. Gen AI) ---
-# openai>=1.0
-# langchain>=0.3
-# langchain-openai>=0.2
-# chromadb>=0.5
-# jupyter>=1.0
-# ipykernel>=6.0
+# --- Gen AI (04. Gen AI) ---
+openai>=1.0
+langchain>=0.3
+langchain-openai>=0.2
+langchain-chroma>=0.2
+chromadb>=0.5
