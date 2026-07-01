@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Contact us</h1>
+  <form method="post" action="/contact">
+    <label>Name <input type="text" name="name" required></label>
+    <label>Email <input type="email" name="email" required></label>
+    <label>Message <textarea name="message"></textarea></label>
+    <button type="submit">Send</button>
+  </form>
+  {% if result %}
+  <p class="success">Thanks, {{ result.name }}! We received your message.</p>
+  {% endif %}
+</body>
+</html>

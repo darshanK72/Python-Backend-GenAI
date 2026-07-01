@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WTF Form</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Flask-WTF</h1>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <label>{{ form.name.label }} {{ form.name() }}</label>
+    <label>{{ form.email.label }} {{ form.email() }}</label>
+    <button type="submit">{{ form.submit.label.text }}</button>
+  </form>
+  {% if success %}
+  <p class="flash-success">Form submitted for {{ name }}!</p>
+  {% endif %}
+</body>
+</html>

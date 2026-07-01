@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AJAX demo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>AJAX with Flask</h1>
+  <button id="load-btn">Load greeting</button>
+  <pre id="output"></pre>
+  <script>
+    document.getElementById("load-btn").addEventListener("click", async () => {
+      const res = await fetch("/api/greeting");
+      const data = await res.json();
+      document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+    });
+  </script>
+</body>
+</html>

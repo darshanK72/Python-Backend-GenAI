@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Contact us</h1>
+  <form method="post" action="{{ url_for('submit_contact') }}">
+    <label>Name <input type="text" name="name" value="{{ name or '' }}" required></label>
+    <label>Email <input type="email" name="email" value="{{ email or '' }}" required></label>
+    <label>Message <textarea name="message">{{ message or '' }}</textarea></label>
+    <button type="submit">Send</button>
+  </form>
+  {% if submitted %}
+  <p class="flash-success">Thanks, {{ name }}! We received your message.</p>
+  {% endif %}
+</body>
+</html>

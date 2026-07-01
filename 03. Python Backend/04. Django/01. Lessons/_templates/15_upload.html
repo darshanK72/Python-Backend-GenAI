@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Upload a file</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>File <input type="file" name="document"></label>
+    <button type="submit">Upload</button>
+  </form>
+</body>
+</html>
