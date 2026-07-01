@@ -63,6 +63,40 @@ Copy [`config.example.env`](config.example.env) to repo root `.env` for MySQL, P
 | 47 | `07. Testing/12. Fixtures and Factories/` | Factories, fixture builders (`01`–`02`) |
 | 48 | `07. Testing/13. Coverage and CI/` | Coverage, CI, GitHub Actions (`01`–`03`) |
 | 49 | `07. Testing/14. Testing Capstone/` | Full Notes API test suite (`01`–`02`) |
+| 50 | `08. Deployment & DevOps/01. Twelve-Factor and Environment/` | 12-factor, stages, pydantic-settings (`01`–`03`) |
+| 51 | `08. Deployment & DevOps/02. WSGI and ASGI Servers/` | Uvicorn, Gunicorn workers (`01`–`03`) |
+| 52 | `08. Deployment & DevOps/03. Docker Basics/` | Dockerfile, build/run (`01`) |
+| 53 | `08. Deployment & DevOps/04. Docker Compose/` | Multi-service stack (`01`) |
+| 54 | `08. Deployment & DevOps/05. Reverse Proxy and TLS/` | Nginx, Caddy, TLS checklist (`01`–`03`) |
+| 55 | `08. Deployment & DevOps/06. Production FastAPI Deploy/` | Prod settings, graceful shutdown (`01`–`02`) |
+| 56 | `08. Deployment & DevOps/07. Production Flask Deploy/` | Waitress, Gunicorn (`01`–`02`) |
+| 57 | `08. Deployment & DevOps/08. Production Django Deploy/` | Gunicorn, ASGI, checklist (`01`–`03`) |
+| 58 | `08. Deployment & DevOps/09. CI CD Pipelines/` | GitHub Actions, test gate, strategies (`01`–`03`) |
+| 59 | `08. Deployment & DevOps/10. Health Checks and Graceful Shutdown/` | Liveness, readiness, signals (`01`–`02`) |
+| 60 | `08. Deployment & DevOps/11. Deployment Capstone/` | Dockerized Notes API (`01`) |
+| 61 | `09. Background Jobs & Serverless Functions/01. Sync vs Async Work/` | When to queue (`01`–`02`) |
+| 62 | `09. Background Jobs & Serverless Functions/02. Threading and Process Workers/` | Thread/process pools (`01`–`02`) |
+| 63 | `09. Background Jobs & Serverless Functions/03. RQ with Redis/` | Enqueue jobs (`01`–`02`) |
+| 64 | `09. Background Jobs & Serverless Functions/04. Celery Basics/` | Celery app, tasks (`01`–`02`) |
+| 65 | `09. Background Jobs & Serverless Functions/05. Celery with RabbitMQ/` | Broker comparison (`01`–`02`) |
+| 66 | `09. Background Jobs & Serverless Functions/06. Scheduled and Periodic Tasks/` | APScheduler, Celery Beat (`01`–`02`) |
+| 67 | `09. Background Jobs & Serverless Functions/07. Task Retries and Idempotency/` | Retry, idempotent tasks (`01`–`03`) |
+| 68 | `09. Background Jobs & Serverless Functions/08. AWS Lambda Basics/` | Handler, Mangum (`01`–`02`) |
+| 69 | `09. Background Jobs & Serverless Functions/09. Azure Functions/` | HTTP + queue triggers (`01`–`02`) |
+| 70 | `09. Background Jobs & Serverless Functions/10. Google Cloud Functions/` | HTTP + Pub/Sub (`01`–`02`) |
+| 71 | `09. Background Jobs & Serverless Functions/11. Serverless vs Containers/` | Decision guide (`01`–`02`) |
+| 72 | `09. Background Jobs & Serverless Functions/12. Background Jobs Capstone/` | Signup + job queue API (`01`) |
+| 73 | `10. Logging & Observability/01. Python Logging Basics/` | Levels, handlers (`01`–`03`) |
+| 74 | `10. Logging & Observability/02. Structured JSON Logging/` | JSON formatter, fields (`01`–`02`) |
+| 75 | `10. Logging & Observability/03. Request Context and Correlation IDs/` | contextvars, propagation (`01`–`02`) |
+| 76 | `10. Logging & Observability/04. FastAPI Logging Middleware/` | Request logging (`01`) |
+| 77 | `10. Logging & Observability/05. Flask Logging/` | before/after request logs (`01`) |
+| 78 | `10. Logging & Observability/06. Django Logging/` | LOGGING config (`01`–`02`) |
+| 79 | `10. Logging & Observability/07. Health and Readiness Probes/` | K8s probes, deep health (`01`–`02`) |
+| 80 | `10. Logging & Observability/08. Metrics with Prometheus/` | Counters, /metrics (`01`–`02`) |
+| 81 | `10. Logging & Observability/09. Error Tracking/` | Sentry overview (`01`–`02`) |
+| 82 | `10. Logging & Observability/10. Distributed Tracing/` | OpenTelemetry intro (`01`–`02`) |
+| 83 | `10. Logging & Observability/11. Observability Capstone/` | Logs + health + metrics (`01`) |
 
 ## Quick commands
 
@@ -166,3 +200,35 @@ pytest test_notes_api.py -v
 ```
 
 Install test extras: `pip install pytest pytest-cov pytest-asyncio`
+
+**Deployment & DevOps**:
+```bash
+cd "08. Deployment & DevOps/01. Twelve-Factor and Environment"
+python 03_pydantic_settings.py
+
+cd "../03. Docker Basics"
+python 01_build_and_run.py
+# docker build -t backend-lesson-api:latest .
+```
+
+**Background jobs** (Redis required for RQ/Celery lessons):
+```bash
+cd "09. Background Jobs & Serverless Functions/03. RQ with Redis"
+python 02_rq_inline_demo.py
+python 01_enqueue_job.py
+# rq worker --url redis://localhost:6379/0
+
+cd "../08. AWS Lambda Basics"
+python 01_lambda_handler.py
+```
+
+**Logging & Observability**:
+```bash
+cd "10. Logging & Observability/01. Python Logging Basics"
+python 01_logging_basics.py
+
+cd "../11. Observability Capstone"
+uvicorn app:app --port 8024
+```
+
+Optional extras: `pip install pydantic-settings gunicorn waitress rq celery apscheduler prometheus-client mangum`

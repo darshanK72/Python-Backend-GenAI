@@ -48,7 +48,14 @@ email-validator>=2.1
 pytest>=8.0
 pytest-cov>=4.1
 pytest-asyncio>=0.23
-# pydantic-settings>=2.0
+pydantic-settings>=2.0
+gunicorn>=22.0
+waitress>=3.0
+rq>=1.16
+celery>=5.4
+apscheduler>=3.10
+prometheus-client>=0.20
+mangum>=0.17
 
 # --- Gen AI (uncomment when you start 04. Gen AI) ---
 # openai>=1.0
