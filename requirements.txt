@@ -67,3 +67,5 @@ langchain>=0.3
 langchain-openai>=0.2
 langchain-chroma>=0.2
 chromadb>=0.5
+pinecone>=5.0
+pgvector>=0.3
