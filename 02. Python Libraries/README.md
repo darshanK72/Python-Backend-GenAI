@@ -30,6 +30,7 @@ jupyter notebook "02. Python Libraries"
 | 07. BeautifulSoup | HTML parsing |
 | 08. OpenPyXL | Excel |
 | 10. Tkinter | Desktop GUI (needs a window) |
-| 12. Utilities | tqdm, dotenv, argparse |
+| 12. Pydentic | Pydantic validation, serializers, settings (`01`–`10_*.py`) |
+| 13. Utilities | tqdm, dotenv, argparse |
 
 Install everything from root [`requirements.txt`](../requirements.txt) (includes `jupyter`, `ipykernel`).
