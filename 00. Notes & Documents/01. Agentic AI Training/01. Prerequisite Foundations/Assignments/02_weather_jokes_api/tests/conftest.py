@@ -15,6 +15,7 @@ from app.services.joke_service import JokeService
 from app.services.weather_service import WeatherService
 
 
+# settings - return isolated settings without reading the developer's real .env
 @pytest.fixture
 def settings() -> Settings:
     """Isolated settings without reading the developer's real .env."""
@@ -25,12 +26,14 @@ def settings() -> Settings:
     )
 
 
+# client - return a FastAPI test client for the application
 @pytest.fixture
 def client() -> Iterator[TestClient]:
     with TestClient(app) as test_client:
         yield test_client
 
 
+# reset_app_state - clear dependency overrides and settings cache between tests
 @pytest.fixture(autouse=True)
 def reset_app_state() -> Iterator[None]:
     """Clear dependency overrides and settings cache between tests."""
@@ -45,16 +48,19 @@ def reset_app_state() -> Iterator[None]:
     get_joke_service.cache_clear()
 
 
+# weather_service - return a WeatherService wired to test settings
 @pytest.fixture
 def weather_service(settings: Settings) -> WeatherService:
     return WeatherService(settings)
 
 
+# joke_service - return a JokeService wired to test settings
 @pytest.fixture
 def joke_service(settings: Settings) -> JokeService:
     return JokeService(settings)
 
 
+# mock_weather_response - return a mocked successful OpenWeather HTTP response
 @pytest.fixture
 def mock_weather_response() -> MagicMock:
     response = MagicMock()
@@ -67,6 +73,7 @@ def mock_weather_response() -> MagicMock:
     return response
 
 
+# mock_joke_twopart_response - return a mocked successful twopart JokeAPI response
 @pytest.fixture
 def mock_joke_twopart_response() -> MagicMock:
     response = MagicMock()
@@ -80,6 +87,7 @@ def mock_joke_twopart_response() -> MagicMock:
     return response
 
 
+# mock_joke_single_response - return a mocked successful single-line JokeAPI response
 @pytest.fixture
 def mock_joke_single_response() -> MagicMock:
     response = MagicMock()

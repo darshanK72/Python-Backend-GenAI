@@ -12,9 +12,11 @@ from app.schemas.responses import WeatherResponse
 class WeatherService:
     """Fetches and maps weather data from OpenWeather."""
 
+    # __init__ - initialise the service with optional settings
     def __init__(self, settings: Settings | None = None) -> None:
         self.settings = settings or get_settings()
 
+    # get_weather - return trimmed weather data for a city
     async def get_weather(
         self,
         city: str,
@@ -41,6 +43,7 @@ class WeatherService:
             conditions=payload["weather"][0]["description"],
         )
 
+    # _request - call OpenWeather with the given query parameters
     async def _request(
         self,
         *,

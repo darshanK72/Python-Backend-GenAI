@@ -9,6 +9,7 @@ from app.schemas.extraction import CORRECTIVE_JSON_INSTRUCTION, FEWSHOT_EXAMPLES
 from app.services.llm_service import LLMService
 
 
+# build_naive_messages - build the minimal one-line naive prompt
 def build_naive_messages(report: str) -> list[dict[str, str]]:
     """Build the minimal one-line naive prompt."""
     return [
@@ -19,6 +20,7 @@ def build_naive_messages(report: str) -> list[dict[str, str]]:
     ]
 
 
+# build_structured_messages - build role plus schema structured prompt messages
 def build_structured_messages(report: str) -> list[dict[str, str]]:
     """Build role + schema structured prompt messages."""
     return [
@@ -27,6 +29,7 @@ def build_structured_messages(report: str) -> list[dict[str, str]]:
     ]
 
 
+# build_fewshot_messages - build few-shot prompt with worked examples before the target report
 def build_fewshot_messages(report: str) -> list[dict[str, str]]:
     """Build few-shot prompt with worked examples before the target report."""
     messages: list[dict[str, str]] = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -44,12 +47,14 @@ def build_fewshot_messages(report: str) -> list[dict[str, str]]:
     return messages
 
 
+# naive_extract - extract bug fields with a minimal one-line prompt
 def naive_extract(report: str, *, service: LLMService | None = None) -> str:
     """Extract bug fields with a minimal one-line prompt."""
     llm = service or LLMService()
     return llm.chat(build_naive_messages(report))
 
 
+# structured_extract - extract bug fields using role, explicit schema, and JSON-only instructions
 def structured_extract(report: str, *, service: LLMService | None = None) -> dict[str, Any]:
     """Extract bug fields using role, explicit schema, and JSON-only instructions."""
     llm = service or LLMService()
@@ -62,6 +67,7 @@ def structured_extract(report: str, *, service: LLMService | None = None) -> dic
     )
 
 
+# fewshot_extract - extract bug fields using structured prompting plus worked examples
 def fewshot_extract(report: str, *, service: LLMService | None = None) -> dict[str, Any]:
     """Extract bug fields using structured prompting plus worked examples."""
     llm = service or LLMService()

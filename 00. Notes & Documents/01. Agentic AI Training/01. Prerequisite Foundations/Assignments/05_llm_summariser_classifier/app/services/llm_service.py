@@ -35,6 +35,7 @@ class ChatClient(Protocol):
 class LLMService:
     """Wraps structured LLM calls for summarise and classify."""
 
+    # __init__ - initialise the service with optional settings and client
     def __init__(
         self,
         settings: Settings | None = None,
@@ -43,6 +44,7 @@ class LLMService:
         self.settings = settings or get_settings()
         self._client = client
 
+    # client - return the configured OpenAI client, creating one if needed
     @property
     def client(self) -> ChatClient:
         if self._client is None:
@@ -51,6 +53,7 @@ class LLMService:
             self._client = OpenAI(api_key=self.settings.openai_api_key)
         return self._client
 
+    # _chat - send messages to the model and return the assistant text
     def _chat(self, messages: list[dict[str, str]]) -> str:
         response = self.client.chat.completions.create(
             model=self.settings.openai_model,
@@ -59,6 +62,7 @@ class LLMService:
         )
         return response.choices[0].message.content or ""
 
+    # _chat_json - call the model and parse JSON, retrying once with a corrective hint
     def _chat_json(
         self,
         messages: list[dict[str, str]],
@@ -79,6 +83,7 @@ class LLMService:
             except json.JSONDecodeError as exc:
                 raise LLMJsonParseError("LLM returned invalid JSON after retry.") from exc
 
+    # summarise_text - return a concise summary and word count for the given text
     def summarise_text(self, text: str) -> SummariseResult:
         """Return a concise summary and word count for the given text."""
         messages = [
@@ -96,6 +101,7 @@ class LLMService:
                 detail="LLM returned invalid summary fields.",
             ) from exc
 
+    # classify_text - classify text into bug, feature, question, or feedback
     def classify_text(self, text: str) -> ClassifyResult:
         """Classify text into bug, feature, question, or feedback."""
         messages = [

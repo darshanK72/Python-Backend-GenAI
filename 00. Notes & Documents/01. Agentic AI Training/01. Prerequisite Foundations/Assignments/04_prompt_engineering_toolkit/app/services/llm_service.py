@@ -26,6 +26,7 @@ class ChatClient(Protocol):
 class LLMService:
     """Wraps OpenAI chat completions with token tracking."""
 
+    # __init__ - initialise the service with optional settings, tracker, and client
     def __init__(
         self,
         settings: Settings | None = None,
@@ -39,6 +40,7 @@ class LLMService:
         self._client = client
         self.emit_usage = emit_usage
 
+    # client - return the configured OpenAI client, creating one if needed
     @property
     def client(self) -> ChatClient:
         if self._client is None:
@@ -47,6 +49,7 @@ class LLMService:
             self._client = OpenAI(api_key=self.settings.openai_api_key)
         return self._client
 
+    # chat - send messages to the model and return the assistant text
     def chat(self, messages: list[dict[str, str]], *, temperature: float | None = None) -> str:
         response = self.client.chat.completions.create(
             model=self.settings.openai_model,
@@ -58,6 +61,7 @@ class LLMService:
             print(self.token_tracker.format_last_call(response.usage))
         return response.choices[0].message.content or ""
 
+    # parse_structured - parse JSON from model text, retrying once with a corrective prompt
     def parse_structured(
         self,
         raw_text: str,

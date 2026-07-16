@@ -18,6 +18,7 @@ from app.strategies.extraction import (
 from tests.conftest import SAMPLE_REPORT, VALID_JSON, make_chat_response
 
 
+# test_build_naive_messages_contains_report - test that naive messages include the report text
 def test_build_naive_messages_contains_report() -> None:
     messages = build_naive_messages(SAMPLE_REPORT)
 
@@ -26,6 +27,7 @@ def test_build_naive_messages_contains_report() -> None:
     assert SAMPLE_REPORT in messages[0]["content"]
 
 
+# test_build_structured_messages_uses_system_prompt - test that structured messages include the system prompt
 def test_build_structured_messages_uses_system_prompt() -> None:
     messages = build_structured_messages(SAMPLE_REPORT)
 
@@ -33,6 +35,7 @@ def test_build_structured_messages_uses_system_prompt() -> None:
     assert SAMPLE_REPORT in messages[1]["content"]
 
 
+# test_build_fewshot_messages_includes_examples - test that few-shot messages include worked examples
 def test_build_fewshot_messages_includes_examples() -> None:
     messages = build_fewshot_messages(SAMPLE_REPORT)
 
@@ -41,6 +44,7 @@ def test_build_fewshot_messages_includes_examples() -> None:
     assert SAMPLE_REPORT in messages[-1]["content"]
 
 
+# test_naive_extract_returns_raw_text - test that naive_extract returns raw model text
 def test_naive_extract_returns_raw_text(mock_client, test_settings, token_tracker) -> None:
     service = LLMService(settings=test_settings, token_tracker=token_tracker, client=mock_client)
 
@@ -49,6 +53,7 @@ def test_naive_extract_returns_raw_text(mock_client, test_settings, token_tracke
     assert result == "plain text"
 
 
+# test_structured_extract_returns_dict - test that structured_extract returns a parsed dictionary
 def test_structured_extract_returns_dict(mock_client, test_settings, token_tracker) -> None:
     mock_client.chat.completions.create.return_value = make_chat_response(VALID_JSON)
     service = LLMService(settings=test_settings, token_tracker=token_tracker, client=mock_client)
@@ -59,6 +64,7 @@ def test_structured_extract_returns_dict(mock_client, test_settings, token_track
     assert result["reproducible"] is True
 
 
+# test_fewshot_extract_returns_dict - test that fewshot_extract returns a parsed dictionary
 def test_fewshot_extract_returns_dict(mock_client, test_settings, token_tracker) -> None:
     mock_client.chat.completions.create.return_value = make_chat_response(VALID_JSON)
     service = LLMService(settings=test_settings, token_tracker=token_tracker, client=mock_client)
@@ -68,6 +74,7 @@ def test_fewshot_extract_returns_dict(mock_client, test_settings, token_tracker)
     assert result["component"] == "settings"
 
 
+# test_structured_extract_surfaces_parse_failure - test that structured_extract raises on repeated parse failure
 def test_structured_extract_surfaces_parse_failure(mock_client, test_settings, token_tracker) -> None:
     mock_client.chat.completions.create.side_effect = [
         make_chat_response("bad"),

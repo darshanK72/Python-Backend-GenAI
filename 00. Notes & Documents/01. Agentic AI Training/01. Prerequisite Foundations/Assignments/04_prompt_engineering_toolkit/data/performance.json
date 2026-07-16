@@ -1,0 +1,7 @@
+[
+  "dashboard charts load slowly after login on chrome, medium priority, only on first visit",
+  "search results take over 10 seconds when the project has more than 1000 tasks, happens in production only",
+  "report export times out for files larger than 50mb, users see a blank screen, high severity",
+  "kanban board stutters when dragging cards on projects with 200+ tasks, reproducible on windows",
+  "api health check endpoint takes 8 seconds to respond during peak hours, critical for monitoring"
+]

@@ -3,6 +3,7 @@
 from fastapi.testclient import TestClient
 
 
+# test_create_list_get_delete_cycle - test the full create, list, get, and delete flow
 def test_create_list_get_delete_cycle(client: TestClient, auth_headers: dict[str, str]) -> None:
     create = client.post(
         "/notes",
@@ -28,6 +29,7 @@ def test_create_list_get_delete_cycle(client: TestClient, auth_headers: dict[str
     assert missing.status_code == 404
 
 
+# test_pagination_across_multiple_pages - test pagination across multiple list requests
 def test_pagination_across_multiple_pages(client: TestClient, auth_headers: dict[str, str]) -> None:
     for index in range(5):
         client.post(

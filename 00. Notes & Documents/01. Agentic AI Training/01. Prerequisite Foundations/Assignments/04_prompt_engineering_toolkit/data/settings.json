@@ -1,0 +1,7 @@
+[
+  "the app crashes when I hit save on the settings page on my iphone, super urgent, happens every time",
+  "dark mode toggle resets to light mode after refresh, low impact but confusing",
+  "notification preferences page shows a blank panel on firefox 128, works fine on chrome",
+  "profile photo upload fails silently for png files over 2mb",
+  "language selector does not persist after logout and login again"
+]

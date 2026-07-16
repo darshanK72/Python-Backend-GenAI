@@ -12,6 +12,7 @@ class ReportsDataError(ValueError):
     """Raised when reports.json is missing or invalid."""
 
 
+# load_reports - load at least five bug report strings from JSON
 def load_reports(path: Path | None = None) -> list[str]:
     """Load at least five bug report strings from JSON."""
     file_path = path or DEFAULT_REPORTS_FILE

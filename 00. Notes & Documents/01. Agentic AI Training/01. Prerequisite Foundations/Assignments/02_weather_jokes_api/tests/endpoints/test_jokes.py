@@ -7,6 +7,7 @@ from app.schemas.responses import JokeResponse
 from tests.endpoints.conftest import override_joke_service
 
 
+# test_joke_returns_typed_twopart_response - test that GET /joke returns a twopart joke response
 def test_joke_returns_typed_twopart_response(client: TestClient) -> None:
     override_joke_service(
         JokeResponse(
@@ -23,6 +24,7 @@ def test_joke_returns_typed_twopart_response(client: TestClient) -> None:
     }
 
 
+# test_joke_returns_single_line_normalised_shape - test that single-line jokes use an empty delivery field
 def test_joke_returns_single_line_normalised_shape(client: TestClient) -> None:
     override_joke_service(JokeResponse(setup="A one-liner joke.", delivery=""))
 
@@ -32,6 +34,7 @@ def test_joke_returns_single_line_normalised_shape(client: TestClient) -> None:
     assert response.json()["delivery"] == ""
 
 
+# test_joke_upstream_unreachable_returns_502 - test that unreachable upstream returns 502
 def test_joke_upstream_unreachable_returns_502(client: TestClient) -> None:
     override_joke_service(
         HTTPException(status_code=502, detail="Joke service is unreachable."),
@@ -42,6 +45,7 @@ def test_joke_upstream_unreachable_returns_502(client: TestClient) -> None:
     assert "unreachable" in response.json()["detail"].lower()
 
 
+# test_joke_upstream_error_payload_returns_502 - test that upstream error payloads return 502
 def test_joke_upstream_error_payload_returns_502(client: TestClient) -> None:
     override_joke_service(
         HTTPException(status_code=502, detail="Joke service error."),
@@ -51,6 +55,7 @@ def test_joke_upstream_error_payload_returns_502(client: TestClient) -> None:
     assert response.status_code == 502
 
 
+# test_joke_response_matches_pydantic_schema - test that GET /joke returns setup and delivery strings
 def test_joke_response_matches_pydantic_schema(client: TestClient) -> None:
     override_joke_service(JokeResponse(setup="Setup", delivery="Delivery"))
 

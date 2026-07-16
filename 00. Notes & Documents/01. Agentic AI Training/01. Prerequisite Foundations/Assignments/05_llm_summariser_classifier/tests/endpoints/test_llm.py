@@ -22,16 +22,19 @@ VALID_CLASSIFY_JSON = (
 )
 
 
+# test_unauthed_summarise_is_401 - test that unauthenticated summarise returns 401
 def test_unauthed_summarise_is_401(client: TestClient) -> None:
     response = client.post("/summarise", json={"text": "Some text to summarise."})
     assert response.status_code == 401
 
 
+# test_unauthed_classify_is_401 - test that unauthenticated classify returns 401
 def test_unauthed_classify_is_401(client: TestClient) -> None:
     response = client.post("/classify", json={"text": "Can we add dark mode?"})
     assert response.status_code == 401
 
 
+# test_invalid_api_key_is_401 - test that an invalid API key returns 401
 def test_invalid_api_key_is_401(client: TestClient) -> None:
     response = client.post(
         "/summarise",
@@ -41,6 +44,7 @@ def test_invalid_api_key_is_401(client: TestClient) -> None:
     assert response.status_code == 401
 
 
+# test_empty_text_is_422 - test that empty text returns 422
 def test_empty_text_is_422(client: TestClient, auth_headers: dict[str, str]) -> None:
     response = client.post(
         "/summarise",
@@ -50,6 +54,7 @@ def test_empty_text_is_422(client: TestClient, auth_headers: dict[str, str]) -> 
     assert response.status_code == 422
 
 
+# test_summarise_returns_expected_shape - test that summarise returns summary and word_count
 def test_summarise_returns_expected_shape(
     llm_service: LLMService,
     auth_headers: dict[str, str],
@@ -71,6 +76,7 @@ def test_summarise_returns_expected_shape(
     assert payload["word_count"] == 2
 
 
+# test_classify_bug_report - test that classify returns category, confidence, and rationale
 def test_classify_bug_report(
     llm_service: LLMService,
     auth_headers: dict[str, str],
@@ -92,6 +98,7 @@ def test_classify_bug_report(
     assert payload["confidence"] == 0.92
 
 
+# test_summarise_llm_invalid_json_returns_502 - test that invalid JSON from the LLM returns 502
 def test_summarise_llm_invalid_json_returns_502(
     llm_service: LLMService,
     mock_client: MagicMock,
@@ -114,6 +121,7 @@ def test_summarise_llm_invalid_json_returns_502(
     assert "invalid JSON" in response.json()["detail"]
 
 
+# test_classify_invalid_category_returns_502 - test that an invalid category returns 502
 def test_classify_invalid_category_returns_502(
     llm_service: LLMService,
     mock_client: MagicMock,
@@ -135,6 +143,7 @@ def test_classify_invalid_category_returns_502(
     assert "invalid classification" in response.json()["detail"].lower()
 
 
+# test_summarise_parses_valid_json_from_service - test that summarise parses valid JSON from the LLM
 def test_summarise_parses_valid_json_from_service(
     llm_service: LLMService,
     mock_client: MagicMock,
@@ -156,6 +165,7 @@ def test_summarise_parses_valid_json_from_service(
     assert "sprint" in payload["summary"].lower()
 
 
+# test_classify_parses_valid_json_from_service - test that classify parses valid JSON from the LLM
 def test_classify_parses_valid_json_from_service(
     llm_service: LLMService,
     mock_client: MagicMock,

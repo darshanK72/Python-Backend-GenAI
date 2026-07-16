@@ -14,9 +14,11 @@ from app.schemas.responses import JokeResponse
 class JokeService:
     """Fetches and normalises jokes from JokeAPI."""
 
+    # __init__ - initialise the service with optional settings
     def __init__(self, settings: Settings | None = None) -> None:
         self.settings = settings or get_settings()
 
+    # get_joke - return a random joke in a consistent setup/delivery shape
     async def get_joke(self, *, client: httpx.AsyncClient | None = None) -> JokeResponse:
         """Return a random joke in a consistent setup/delivery shape."""
         response = await self._request(client=client)
@@ -33,6 +35,7 @@ class JokeService:
 
         return self._normalise_joke(payload)
 
+    # _normalise_joke - map twopart and single-line jokes to JokeResponse
     @staticmethod
     def _normalise_joke(payload: dict[str, Any]) -> JokeResponse:
         if payload.get("type") == "twopart":
@@ -43,6 +46,7 @@ class JokeService:
         joke = payload.get("joke", "")
         return JokeResponse(setup=joke, delivery="")
 
+    # _request - call JokeAPI and return the upstream response
     async def _request(self, *, client: httpx.AsyncClient | None) -> httpx.Response:
         if client is not None:
             try:

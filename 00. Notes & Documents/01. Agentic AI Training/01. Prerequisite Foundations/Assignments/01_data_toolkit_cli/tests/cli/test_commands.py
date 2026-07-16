@@ -2,7 +2,7 @@
 
 from app.cli.commands import cmd_load, cmd_points, cmd_summary, cmd_tag
 
-
+# test_cmd_summary_prints_counts_and_totals - test that the command summary prints the counts and totals
 def test_cmd_summary_prints_counts_and_totals(sample_tasks: list[dict], capsys) -> None:
     cmd_summary(sample_tasks)
     output = capsys.readouterr().out
@@ -13,17 +13,17 @@ def test_cmd_summary_prints_counts_and_totals(sample_tasks: list[dict], capsys) 
     assert "open points" in output
     assert " 13" in output  # open points for sample_tasks
 
-
+# test_cmd_points_without_status - test that the command points prints the total story points without a status
 def test_cmd_points_without_status(sample_tasks: list[dict], capsys) -> None:
     cmd_points(sample_tasks, None)
     assert capsys.readouterr().out == "Total story points: 16\n"
 
-
+# test_cmd_points_with_status_filter - test that the command points prints the story points for a given status
 def test_cmd_points_with_status_filter(sample_tasks: list[dict], capsys) -> None:
     cmd_points(sample_tasks, "done")
     assert capsys.readouterr().out == "Story points (done): 3\n"
 
-
+# test_cmd_load_lists_all_assignees - test that the command load prints the open story points for all assignees
 def test_cmd_load_lists_all_assignees(sample_tasks: list[dict], capsys) -> None:
     cmd_load(sample_tasks, None)
     output = capsys.readouterr().out
@@ -32,17 +32,17 @@ def test_cmd_load_lists_all_assignees(sample_tasks: list[dict], capsys) -> None:
     assert "Alice" in output
     assert "Bob" not in output
 
-
+# test_cmd_load_single_assignee - test that the command load prints the open story points for a single assignee
 def test_cmd_load_single_assignee(sample_tasks: list[dict], capsys) -> None:
     cmd_load(sample_tasks, "Alice")
     assert capsys.readouterr().out == "Open story points for Alice: 13\n"
 
-
+# test_cmd_load_unknown_assignee_reports_zero - test that the command load prints 0 for an unknown assignee
 def test_cmd_load_unknown_assignee_reports_zero(sample_tasks: list[dict], capsys) -> None:
     cmd_load(sample_tasks, "Zoe")
     assert capsys.readouterr().out == "Open story points for Zoe: 0\n"
 
-
+# test_cmd_tag_lists_matching_tasks - test that the command tag prints the tasks that match the given tag
 def test_cmd_tag_lists_matching_tasks(sample_tasks: list[dict], capsys) -> None:
     cmd_tag(sample_tasks, "auth")
     output = capsys.readouterr().out
@@ -50,7 +50,7 @@ def test_cmd_tag_lists_matching_tasks(sample_tasks: list[dict], capsys) -> None:
     assert "Tasks tagged 'auth' (1)" in output
     assert "Alpha" in output
 
-
+# test_cmd_tag_reports_when_no_matches - test that the command tag prints a message when no tasks match the given tag
 def test_cmd_tag_reports_when_no_matches(sample_tasks: list[dict], capsys) -> None:
     cmd_tag(sample_tasks, "devops")
     assert capsys.readouterr().out == "No tasks found for tag 'devops'.\n"

@@ -12,6 +12,7 @@ from app.schemas.llm import ClassifyResult, SummariseResult
 from app.services.llm_service import LLMService
 
 
+# test_secured_summarise_and_classify_flow - test health, summarise, and classify with API key auth
 def test_secured_summarise_and_classify_flow(
     llm_service: LLMService,
     auth_headers: dict[str, str],

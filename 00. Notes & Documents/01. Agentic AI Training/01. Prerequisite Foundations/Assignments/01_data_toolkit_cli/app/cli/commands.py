@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from app.services.analytics import assignee_load, count_by_status, filter_by_tag, total_points
 
-
+# cmd_summary - print status counts and overall point totals
 def cmd_summary(tasks: list[dict]) -> None:
     """Print status counts and overall point totals."""
     counts = count_by_status(tasks)
@@ -21,7 +21,7 @@ def cmd_summary(tasks: list[dict]) -> None:
     )
     print(f"  {'open points':12} {open_points:3}")
 
-
+# cmd_points - print summed story points for a given status
 def cmd_points(tasks: list[dict], status: str | None) -> None:
     """Print summed story points."""
     if status is None:
@@ -29,7 +29,7 @@ def cmd_points(tasks: list[dict], status: str | None) -> None:
         return
     print(f"Story points ({status}): {total_points(tasks, status=status)}")
 
-
+# cmd_load - print open story points per assignee
 def cmd_load(tasks: list[dict], assignee: str | None) -> None:
     """Print open story points per assignee."""
     loads = assignee_load(tasks)
@@ -43,7 +43,7 @@ def cmd_load(tasks: list[dict], assignee: str | None) -> None:
     points = loads.get(assignee, 0)
     print(f"Open story points for {assignee}: {points}")
 
-
+# cmd_tag - print tasks that match the given tag
 def cmd_tag(tasks: list[dict], tag: str) -> None:
     """Print tasks that match the given tag."""
     matches = filter_by_tag(tasks, tag)

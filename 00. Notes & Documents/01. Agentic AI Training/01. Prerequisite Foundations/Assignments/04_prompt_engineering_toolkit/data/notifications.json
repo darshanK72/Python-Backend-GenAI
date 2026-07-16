@@ -1,0 +1,7 @@
+[
+  "email notifications are not sent when a comment is added, reproducible in staging, high severity",
+  "push alerts fire three times for the same mention, annoying but not blocking, medium priority",
+  "digest emails show the wrong timezone for due dates, only affects eu customers",
+  "slack integration posts duplicate messages when a ticket moves to done",
+  "in app banner for maintenance never dismisses even after clicking close"
+]

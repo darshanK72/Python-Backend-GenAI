@@ -11,11 +11,13 @@ from app.config import Settings, get_settings
 from app.services.llm_service import LLMService
 
 
+# get_llm_service - return a cached LLMService instance
 @lru_cache
 def get_llm_service() -> LLMService:
     return LLMService()
 
 
+# verify_api_key - validate the X-API-Key header against the configured key
 def verify_api_key(
     x_api_key: str = Header(default=""),
     settings: Settings = Depends(get_settings),

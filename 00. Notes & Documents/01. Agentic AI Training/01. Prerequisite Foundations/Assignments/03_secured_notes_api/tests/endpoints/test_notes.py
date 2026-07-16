@@ -3,6 +3,7 @@
 from fastapi.testclient import TestClient
 
 
+# test_authed_create_succeeds - test that authenticated create returns 201
 def test_authed_create_succeeds(client: TestClient, auth_headers: dict[str, str]) -> None:
     response = client.post(
         "/notes",
@@ -17,11 +18,13 @@ def test_authed_create_succeeds(client: TestClient, auth_headers: dict[str, str]
     assert "created_at" in payload
 
 
+# test_unauthed_create_is_401 - test that unauthenticated create returns 401
 def test_unauthed_create_is_401(client: TestClient) -> None:
     response = client.post("/notes", json={"title": "Nope", "body": "Denied"})
     assert response.status_code == 401
 
 
+# test_create_with_invalid_api_key_is_401 - test that an invalid API key returns 401 on create
 def test_create_with_invalid_api_key_is_401(client: TestClient) -> None:
     response = client.post(
         "/notes",
@@ -31,6 +34,7 @@ def test_create_with_invalid_api_key_is_401(client: TestClient) -> None:
     assert response.status_code == 401
 
 
+# test_create_empty_title_is_422 - test that an empty title returns 422
 def test_create_empty_title_is_422(client: TestClient, auth_headers: dict[str, str]) -> None:
     response = client.post(
         "/notes",
@@ -40,6 +44,7 @@ def test_create_empty_title_is_422(client: TestClient, auth_headers: dict[str, s
     assert response.status_code == 422
 
 
+# test_create_missing_body_is_422 - test that a missing body returns 422
 def test_create_missing_body_is_422(client: TestClient, auth_headers: dict[str, str]) -> None:
     response = client.post(
         "/notes",
@@ -49,6 +54,7 @@ def test_create_missing_body_is_422(client: TestClient, auth_headers: dict[str, 
     assert response.status_code == 422
 
 
+# test_list_pagination_works - test that list notes supports limit and offset
 def test_list_pagination_works(client: TestClient, auth_headers: dict[str, str]) -> None:
     for index in range(3):
         client.post(
@@ -67,6 +73,7 @@ def test_list_pagination_works(client: TestClient, auth_headers: dict[str, str])
     assert payload["items"][0]["title"] == "Note 1"
 
 
+# test_list_defaults_to_limit_10 - test that list notes defaults to limit 10 and offset 0
 def test_list_defaults_to_limit_10(client: TestClient, auth_headers: dict[str, str]) -> None:
     response = client.get("/notes")
     assert response.status_code == 200
@@ -74,11 +81,13 @@ def test_list_defaults_to_limit_10(client: TestClient, auth_headers: dict[str, s
     assert response.json()["offset"] == 0
 
 
+# test_list_rejects_limit_over_100 - test that list notes rejects limit greater than 100
 def test_list_rejects_limit_over_100(client: TestClient) -> None:
     response = client.get("/notes", params={"limit": 101})
     assert response.status_code == 422
 
 
+# test_get_note_succeeds - test that GET /notes/{id} returns the created note
 def test_get_note_succeeds(client: TestClient, auth_headers: dict[str, str]) -> None:
     created = client.post(
         "/notes",
@@ -92,11 +101,13 @@ def test_get_note_succeeds(client: TestClient, auth_headers: dict[str, str]) -> 
     assert response.json()["title"] == "Read me"
 
 
+# test_get_missing_is_404 - test that GET /notes/{id} returns 404 for missing notes
 def test_get_missing_is_404(client: TestClient) -> None:
     response = client.get("/notes/999")
     assert response.status_code == 404
 
 
+# test_delete_works - test that DELETE /notes/{id} removes the note
 def test_delete_works(client: TestClient, auth_headers: dict[str, str]) -> None:
     create = client.post(
         "/notes",
@@ -112,6 +123,7 @@ def test_delete_works(client: TestClient, auth_headers: dict[str, str]) -> None:
     assert get_after.status_code == 404
 
 
+# test_unauthed_delete_is_401 - test that unauthenticated delete returns 401
 def test_unauthed_delete_is_401(client: TestClient, auth_headers: dict[str, str]) -> None:
     create = client.post(
         "/notes",
@@ -124,11 +136,13 @@ def test_unauthed_delete_is_401(client: TestClient, auth_headers: dict[str, str]
     assert response.status_code == 401
 
 
+# test_delete_missing_note_is_404 - test that DELETE /notes/{id} returns 404 for missing notes
 def test_delete_missing_note_is_404(client: TestClient, auth_headers: dict[str, str]) -> None:
     response = client.delete("/notes/999", headers=auth_headers)
     assert response.status_code == 404
 
 
+# test_openapi_documents_note_schemas - test that OpenAPI documents note endpoints and schemas
 def test_openapi_documents_note_schemas(client: TestClient) -> None:
     schema = client.get("/openapi.json").json()
     components = schema["components"]["schemas"]

@@ -7,6 +7,7 @@ from types import SimpleNamespace
 from app.services.token_tracker import TokenTracker
 
 
+# test_record_accumulates_tokens - test that record accumulates prompt and completion tokens
 def test_record_accumulates_tokens() -> None:
     tracker = TokenTracker()
     tracker.record(SimpleNamespace(prompt_tokens=10, completion_tokens=5))
@@ -17,6 +18,7 @@ def test_record_accumulates_tokens() -> None:
     assert tracker.running_total == 20
 
 
+# test_reset_clears_totals - test that reset clears accumulated token totals
 def test_reset_clears_totals() -> None:
     tracker = TokenTracker()
     tracker.record(SimpleNamespace(prompt_tokens=1, completion_tokens=1))
@@ -25,6 +27,7 @@ def test_reset_clears_totals() -> None:
     assert tracker.running_total == 0
 
 
+# test_format_last_call_includes_running_total - test that format_last_call includes the running total
 def test_format_last_call_includes_running_total() -> None:
     tracker = TokenTracker()
     tracker.record(SimpleNamespace(prompt_tokens=4, completion_tokens=6))

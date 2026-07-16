@@ -11,7 +11,7 @@ VALID_STATUSES = frozenset({"todo", "in_progress", "done", "blocked"})
 class TaskDataError(Exception):
     """Raised when task data cannot be loaded or parsed."""
 
-
+# load_tasks - read and parse a JSON file containing a list of task objects
 def load_tasks(path: str) -> list[dict]:
     """Read and parse a JSON file containing a list of task objects."""
     file_path = Path(path)
@@ -31,7 +31,7 @@ def load_tasks(path: str) -> list[dict]:
 
     return data
 
-
+# count_by_status - count the number of tasks per status
 def count_by_status(tasks: list[dict]) -> dict[str, int]:
     """Return a count of tasks per status."""
     counts: dict[str, int] = {status: 0 for status in sorted(VALID_STATUSES)}
@@ -41,7 +41,7 @@ def count_by_status(tasks: list[dict]) -> dict[str, int]:
             counts[status] += 1
     return counts
 
-
+# total_points - sum story_points across all tasks, or only those matching status
 def total_points(tasks: list[dict], status: str | None = None) -> int:
     """Sum story_points across all tasks, or only those matching status."""
     total = 0
@@ -51,7 +51,7 @@ def total_points(tasks: list[dict], status: str | None = None) -> int:
         total += int(task.get("story_points", 0))
     return total
 
-
+# assignee_load - return total open (non-done) story points per assignee, highest first
 def assignee_load(tasks: list[dict]) -> dict[str, int]:
     """Return total open (non-done) story points per assignee, highest first."""
     loads: dict[str, int] = {}
@@ -62,7 +62,7 @@ def assignee_load(tasks: list[dict]) -> dict[str, int]:
         loads[assignee] = loads.get(assignee, 0) + int(task.get("story_points", 0))
     return dict(sorted(loads.items(), key=lambda item: (-item[1], item[0])))
 
-
+# filter_by_tag - return tasks whose tags list contains the given tag (case-insensitive)
 def filter_by_tag(tasks: list[dict], tag: str) -> list[dict]:
     """Return tasks whose tags list contains the given tag (case-insensitive)."""
     needle = tag.casefold()

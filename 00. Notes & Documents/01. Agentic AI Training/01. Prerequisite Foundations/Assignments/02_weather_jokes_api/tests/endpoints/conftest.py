@@ -11,6 +11,7 @@ from app.services.joke_service import JokeService
 from app.services.weather_service import WeatherService
 
 
+# override_weather_service - inject a mocked weather service into the FastAPI app
 def override_weather_service(return_value: WeatherResponse | Exception) -> None:
     mock_service = MagicMock(spec=WeatherService)
     if isinstance(return_value, Exception):
@@ -20,6 +21,7 @@ def override_weather_service(return_value: WeatherResponse | Exception) -> None:
     app.dependency_overrides[get_weather_service] = lambda: mock_service
 
 
+# override_joke_service - inject a mocked joke service into the FastAPI app
 def override_joke_service(return_value: JokeResponse | Exception) -> None:
     mock_service = MagicMock(spec=JokeService)
     if isinstance(return_value, Exception):

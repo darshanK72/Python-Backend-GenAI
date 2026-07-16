@@ -8,6 +8,7 @@ import pytest
 
 from app.config import DEFAULT_TASKS_FILE
 
+# SAMPLE_TASKS - the sample tasks for testing
 SAMPLE_TASKS = [
     {
         "id": 1,
@@ -35,12 +36,12 @@ SAMPLE_TASKS = [
     },
 ]
 
-
+# sample_tasks - return a copy of the sample tasks
 @pytest.fixture
 def sample_tasks() -> list[dict]:
     return [task.copy() for task in SAMPLE_TASKS]
 
-
+# tasks_file - create a temporary tasks file for testing
 @pytest.fixture
 def tasks_file(tmp_path: Path) -> Path:
     path = tmp_path / "tasks.json"
@@ -50,7 +51,7 @@ def tasks_file(tmp_path: Path) -> Path:
     )
     return path
 
-
+# default_tasks_file - return the default tasks file
 @pytest.fixture
 def default_tasks_file() -> Path:
     assert DEFAULT_TASKS_FILE.is_file()

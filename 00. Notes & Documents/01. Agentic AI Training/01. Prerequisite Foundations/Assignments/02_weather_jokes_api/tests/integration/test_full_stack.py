@@ -12,6 +12,7 @@ from app.services.joke_service import JokeService
 from app.services.weather_service import WeatherService
 
 
+# test_weather_full_stack_with_mocked_upstream - test weather flow from endpoint through service to mocked HTTP
 def test_weather_full_stack_with_mocked_upstream(client: TestClient) -> None:
     settings = Settings.model_construct(openweather_api_key="integration-key")
     app.dependency_overrides[get_weather_service] = lambda: WeatherService(settings)
@@ -42,6 +43,7 @@ def test_weather_full_stack_with_mocked_upstream(client: TestClient) -> None:
     }
 
 
+# test_joke_full_stack_with_mocked_upstream - test joke flow from endpoint through service to mocked HTTP
 def test_joke_full_stack_with_mocked_upstream(client: TestClient) -> None:
     settings = Settings.model_construct(openweather_api_key="unused")
     app.dependency_overrides[get_joke_service] = lambda: JokeService(settings)
@@ -69,6 +71,7 @@ def test_joke_full_stack_with_mocked_upstream(client: TestClient) -> None:
     assert response.json()["delivery"] == ""
 
 
+# test_weather_full_stack_unknown_city_propagates_404 - test that unknown cities propagate 404 through the stack
 def test_weather_full_stack_unknown_city_propagates_404(client: TestClient) -> None:
     settings = Settings.model_construct(openweather_api_key="integration-key")
     app.dependency_overrides[get_weather_service] = lambda: WeatherService(settings)
@@ -87,6 +90,7 @@ def test_weather_full_stack_unknown_city_propagates_404(client: TestClient) -> N
     assert response.status_code == 404
 
 
+# test_weather_full_stack_unreachable_returns_502 - test that unreachable upstream returns 502 through the stack
 def test_weather_full_stack_unreachable_returns_502(client: TestClient) -> None:
     settings = Settings.model_construct(openweather_api_key="integration-key")
     app.dependency_overrides[get_weather_service] = lambda: WeatherService(settings)

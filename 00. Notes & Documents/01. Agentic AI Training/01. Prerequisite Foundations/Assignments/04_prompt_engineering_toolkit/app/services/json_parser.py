@@ -11,6 +11,7 @@ class StructuredParseError(ValueError):
     """Raised when structured JSON cannot be parsed after retry."""
 
 
+# extract_json_block - parse JSON from raw model text, stripping optional markdown fences
 def extract_json_block(text: str) -> dict[str, Any]:
     """Parse JSON from raw model text, stripping optional markdown fences."""
     cleaned = text.strip()

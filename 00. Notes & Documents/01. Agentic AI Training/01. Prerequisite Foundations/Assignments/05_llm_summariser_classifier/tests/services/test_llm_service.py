@@ -18,6 +18,7 @@ VALID_CLASSIFY_JSON = (
 )
 
 
+# test_summarise_text_returns_validated_model - test that summarise_text returns a SummariseResult
 def test_summarise_text_returns_validated_model(
     llm_service: LLMService,
     mock_client: MagicMock,
@@ -30,6 +31,7 @@ def test_summarise_text_returns_validated_model(
     assert result.word_count == 2
 
 
+# test_classify_text_returns_validated_model - test that classify_text returns a ClassifyResult
 def test_classify_text_returns_validated_model(
     llm_service: LLMService,
     mock_client: MagicMock,
@@ -42,6 +44,7 @@ def test_classify_text_returns_validated_model(
     assert result.category == "feature"
 
 
+# test_summarise_retries_on_invalid_json - test that summarise retries once on invalid JSON
 def test_summarise_retries_on_invalid_json(
     llm_service: LLMService,
     mock_client: MagicMock,
@@ -57,6 +60,7 @@ def test_summarise_retries_on_invalid_json(
     assert mock_client.chat.completions.create.call_count == 2
 
 
+# test_missing_openai_key_raises_502 - test that a missing OpenAI API key returns 502
 def test_missing_openai_key_raises_502(test_settings) -> None:
     test_settings.openai_api_key = ""
     service = LLMService(settings=test_settings)
@@ -67,6 +71,7 @@ def test_missing_openai_key_raises_502(test_settings) -> None:
     assert exc_info.value.status_code == 502
 
 
+# test_invalid_json_after_retry_raises_502 - test that invalid JSON after retry returns 502
 def test_invalid_json_after_retry_raises_502(
     llm_service: LLMService,
     mock_client: MagicMock,

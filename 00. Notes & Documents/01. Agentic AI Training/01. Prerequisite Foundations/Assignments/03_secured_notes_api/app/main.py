@@ -5,8 +5,10 @@ from fastapi import FastAPI
 from app.config import get_settings
 from app.endpoints import notes
 
+# settings - loaded application settings
 settings = get_settings()
 
+# app - FastAPI application instance with registered routers
 app = FastAPI(
     title=settings.app_title,
     description=(

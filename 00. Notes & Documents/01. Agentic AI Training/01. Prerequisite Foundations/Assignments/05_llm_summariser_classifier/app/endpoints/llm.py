@@ -7,9 +7,11 @@ from app.schemas.llm import ClassifyResult, SummariseResult
 from app.schemas.requests import TextRequest
 from app.services.llm_service import LLMService
 
+# router - API router for LLM endpoints
 router = APIRouter(tags=["llm"])
 
 
+# summarise - summarise free text into a short summary and word count
 @router.post("/summarise", response_model=SummariseResult)
 def summarise(
     payload: TextRequest,
@@ -20,6 +22,7 @@ def summarise(
     return llm_service.summarise_text(payload.text)
 
 
+# classify - classify free text into bug, feature, question, or feedback
 @router.post("/classify", response_model=ClassifyResult)
 def classify(
     payload: TextRequest,
